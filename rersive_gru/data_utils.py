@@ -1,4 +1,4 @@
-from tf_treenode import tNode,processTree
+from node import tNode,processTree
 import numpy as np
 import os
 import random
@@ -273,7 +273,7 @@ def get_max_node_size(datadic):
     return maxsize
 
 def test_fn():
-    data_dir='/home/vasilis/Desktop/thesis_tf/RecursiveNN/treelstm/data/sst'
+    data_dir='.../treelstm/data/sst'
     fine_grained=0
     data,_=load_sentiment_treebank(data_dir,fine_grained)
     for d in data.itervalues():
