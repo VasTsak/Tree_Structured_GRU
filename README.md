@@ -1,8 +1,9 @@
-# master_thesis
+# Tree-based Gated Recurrent Units
 
 This repository aims to be my repository that I will store the scripts for my master thesis.
 
-The content of this repository is the implementation of an alteration of [this paper](https://arxiv.org/pdf/1503.00075.pdf) written by Kai Sheng Tai, Richard Socher, Christopher D. Manning. My implementation is the hybrid between a recursive neural networks and Gated Recurrent Units.
+The content of this repository is the implementation of an alteration of [this paper](https://arxiv.org/pdf/1503.00075.pdf) written by Kai Sheng Tai, Richard Socher, Christopher D. Manning. My implementation is the hybrid between a recursive neural networks and Gated Recurrent Units. Moreover it is important to mention that this alteration is tested
+on sentiment classification , both binary and fine-grained. 
 
 I am testing two different alterations  of this idea. 
 
