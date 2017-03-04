@@ -5,9 +5,6 @@ import sys
 
 from data_utils import extract_tree_data,extract_batch_tree_data
 
-
-
-
 class tf_NarytreeGRU(object):
 # Tune the parameters and the hyperparameters
     def __init__(self,config):
