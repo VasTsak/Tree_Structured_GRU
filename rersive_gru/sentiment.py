@@ -9,8 +9,8 @@ import pickle
 
 import tree_gru
 
-DIR = '/home/vasilis/Desktop/thesis_tf/RecursiveNN/treelstm/data/sst'
-GLOVE_DIR ='/home/vasilis/Desktop/thesis_tf/RecursiveNN/treelstm/data/glove'
+DIR = '.../treelstm/data/sst'
+GLOVE_DIR ='.../treelstm/data/glove'
 
 import pdb
 import time
@@ -87,7 +87,7 @@ def train(restore=False):
             sess.run(init)
             start_time=time.time()
 
-            if restore:saver.restore(sess,'/home/vasilis/Desktop/thesis_tf/RecursiveNN/weights')
+            if restore:saver.restore(sess,'.../weights')
             for epoch in range(config.num_epochs):
                 print 'epoch', epoch
                 avg_loss=0.0
@@ -100,7 +100,7 @@ def train(restore=False):
                 if dev_score > best_valid_score:
                     best_valid_score=dev_score
                     best_valid_epoch=epoch
-                    saver.save(sess,'/home/vasilis/Desktop/thesis_tf/RecursiveNN/weights')
+                    saver.save(sess,'.../weights')
 
                 if epoch -best_valid_epoch > config.early_stopping:
                     break
