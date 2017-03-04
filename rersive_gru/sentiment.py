@@ -1,4 +1,4 @@
-import tf_data_utils as utils
+import data_utils as utils
 
 import os
 import sys
@@ -9,8 +9,8 @@ import pickle
 
 import tree_gru
 
-DIR = '/home/vasilis/Desktop/thesis_tf/RecursiveNN/treelstm/data/sst'
-GLOVE_DIR ='/home/vasilis/Desktop/thesis_tf/RecursiveNN/treelstm/data/glove'
+DIR = '.../treelstm/data/sst'
+GLOVE_DIR ='.../treelstm/data/glove'
 
 import pdb
 import time
@@ -33,7 +33,7 @@ class Config(object):
     emb_lr = 0.1
     reg=0.0001
 
-    batch_size = 15
+    batch_size = 25
     #num_steps = 10
     maxseqlen = None
     maxnodesize = None
@@ -75,7 +75,7 @@ def train(restore=False):
 
 
     with tf.Graph().as_default():
-        model = tree_gru_alter.tf_NarytreeGRU(config)
+        model = tree_gru.tf_NarytreeGRU(config)
         init=tf.initialize_all_variables()
         saver = tf.train.Saver()
         best_valid_score=0.0
@@ -87,7 +87,7 @@ def train(restore=False):
             sess.run(init)
             start_time=time.time()
 
-            if restore:saver.restore(sess,'/home/vasilis/Desktop/thesis_tf/RecursiveNN/weights')
+            if restore:saver.restore(sess,'.../weights')
             for epoch in range(config.num_epochs):
                 print 'epoch', epoch
                 avg_loss=0.0
@@ -100,7 +100,7 @@ def train(restore=False):
                 if dev_score > best_valid_score:
                     best_valid_score=dev_score
                     best_valid_epoch=epoch
-                    saver.save(sess,'/home/vasilis/Desktop/thesis_tf/RecursiveNN/weights')
+                    saver.save(sess,'.../weights')
 
                 if epoch -best_valid_epoch > config.early_stopping:
                     break
