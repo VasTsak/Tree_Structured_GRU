@@ -17,4 +17,6 @@ I am testing two different alterations  of this idea.
 
 In order to run those two models, you should run the following script. Which downloads the pre-trained word embeddings.
 
+```
 ./fetch_and_preprocess.sh
+```
