@@ -15,6 +15,6 @@ I am testing two different alterations  of this idea.
 
 ![alt tag](https://github.com/VasTsak/master_thesis/blob/master/rersive_gru/second_approach.png?raw=true)
 
-If you feel like you would like to contribute to it or suggest something please do it. 
+In order to run those two models, you should run the following script. Which downloads the pre-trained word embeddings.
 
-Cheers !
+./fetch_and_preprocess.sh
