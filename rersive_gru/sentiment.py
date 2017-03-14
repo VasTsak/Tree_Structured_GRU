@@ -41,7 +41,6 @@ class Config(object):
     fine_grained=False
     trainable_embeddings=True
     nonroot_labels=True
-    #dependency=True not supported
  
 def train(restore=False):
  
