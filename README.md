@@ -17,8 +17,8 @@ I am testing two different alterations  of this idea.
 
 
 ## Requirements
-Python = 2.7__
-Tensorflow = 1.0.1 __
+Python = 2.7<br />
+Tensorflow = 1.0.1 <br />
 
 In order to run those two models, you should run the following script, which downloads the pre-trained word embeddings.
 ```
