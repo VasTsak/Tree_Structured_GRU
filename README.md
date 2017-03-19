@@ -31,3 +31,4 @@ However it is likely not to be able to run the script, if this is the case run f
 chmod +x fetch_and_preprocess.sh
 ./fetch_and_preprocess.sh
 ```
+Note: I will upload the script for the tensorflow (up to date) version r-1.0 soon.
