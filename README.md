@@ -15,8 +15,16 @@ I am testing two different alterations  of this idea.
 
 ![alt tag](https://github.com/VasTsak/master_thesis/blob/master/rersive_gru/second_approach.png?raw=true)
 
-In order to run those two models, you should run the following script, which downloads the pre-trained word embeddings.
 
+## Requirements
+Python = 2.7
+Tensorflow = 1.0.1
+
+In order to run those two models, you should run the following script, which downloads the pre-trained word embeddings.
 ```
 ./fetch_and_preprocess.sh
+```
+However it is likely to not be able to run the script, if this is the case run first the script below
+```
+chmod +x fetch_and_preprocess.sh
 ```
