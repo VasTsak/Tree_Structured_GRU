@@ -22,9 +22,12 @@ Tensorflow = 1.0.1 <br />
 
 In order to run those two models, you should run the following script, which downloads the pre-trained word embeddings.
 ```
+git clone https://github.com/stanfordnlp/treelstm.git
+cd treelstm
 ./fetch_and_preprocess.sh
 ```
 However it is likely not to be able to run the script, if this is the case run first the script below
 ```
 chmod +x fetch_and_preprocess.sh
+./fetch_and_preprocess.sh
 ```
