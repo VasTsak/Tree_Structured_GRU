@@ -5,9 +5,6 @@ import sys
 
 from data_utils import extract_tree_data,extract_batch_tree_data
 
-
-
-
 class tf_NarytreeGRU(object):
 # Tune the parameters and the hyperparameters
     def __init__(self,config):
@@ -75,15 +72,9 @@ class tf_NarytreeGRU(object):
 #initial CW : 300X750
 #GRU : CW : 300X600
 #initial cb : 4*150=600 -> 450 
-              #1rst alteration
             cU = tf.get_variable("cU",[self.emb_dim,2*self.hidden_dim],initializer=tf.random_uniform_initializer(-self.calc_wt_init(),self.calc_wt_init()))
             cW = tf.get_variable("cW",[self.degree*self.hidden_dim,(self.degree+2)*self.hidden_dim],initializer=tf.random_uniform_initializer(-self.calc_wt_init(self.hidden_dim),self.calc_wt_init(self.hidden_dim)))
             cb = tf.get_variable("cb",[3*self.hidden_dim],initializer=tf.constant_initializer(0.0),regularizer=tf.contrib.layers.l2_regularizer(0.0))
-
-            # #2nd alteration
-            # cU = tf.get_variable("cU",[self.emb_dim,2*self.hidden_dim],initializer=tf.random_uniform_initializer(-self.calc_wt_init(),self.calc_wt_init()))
-            # cW = tf.get_variable("cW",[self.degree*self.hidden_dim,(self.degree+3)*self.hidden_dim],initializer=tf.random_uniform_initializer(-self.calc_wt_init(self.hidden_dim),self.calc_wt_init(self.hidden_dim)))
-            # cb = tf.get_variable("cb",[3*self.hidden_dim],initializer=tf.constant_initializer(0.0),regularizer=tf.contrib.layers.l2_regularizer(0.0))
         
         with tf.variable_scope("Projection",regularizer=tf.contrib.layers.l2_regularizer(self.config.reg)):
 
@@ -105,7 +96,7 @@ class tf_NarytreeGRU(object):
             def _recurseleaf(x):
 
                 concat_zh = tf.matmul(tf.expand_dims(x,0),cU) + b
-                z,h_ = tf.split(1,2,concat_zh)
+                z,h_ = tf.split(concat_zh,2,1)
 
                 z=tf.nn.sigmoid(z)
                 h_=tf.nn.tanh(h_)
@@ -140,8 +131,8 @@ class tf_NarytreeGRU(object):
             prediction.append(pred_root)
             outloss.append(loss)
 
-        batch_loss=tf.pack(outloss)
-        self.pred = tf.pack(prediction)
+        batch_loss=tf.stack(outloss)
+        self.pred = tf.stack(prediction)
 
         return batch_loss
 
@@ -168,12 +159,12 @@ class tf_NarytreeGRU(object):
 
 #cW : 300,5*150' -> 300,4*150
 #cb : 600
-            #1rst Alteration
 
             cW = tf.get_variable("cW",[self.degree*self.hidden_dim,(self.degree+2)*self.hidden_dim])
             cb = tf.get_variable("cb",[3*self.hidden_dim])
-            bh,bz,br=tf.split(0,3,cb)
+            bh,bz,br=tf.split(cb,3,0)
 
+            #1rst Alteration
             def _recurrence(node_h,idx_var):
                 node_info=tf.gather(treestr,idx_var)
 
@@ -181,19 +172,18 @@ class tf_NarytreeGRU(object):
 
                 flat_ = tf.reshape(child_h,[-1])
                 tmp=tf.matmul(tf.expand_dims(flat_,0),cW)
-                h,rl,rr,z=tf.split(1,4,tmp)
+                h,rl,rr,z=tf.split(tmp,4,1)
 
 
                 z = tf.nn.sigmoid(z+bz)
                 rl = tf.nn.sigmoid(rl+br)
                 rr = tf.nn.sigmoid(rr+br)
-                r=tf.concat(0,[rl,rr])
-                h_ = tf.reduce_sum(r*child_h,[0]) 
-                h_ = tf.nn.tanh(h+bh+h_)
+                h_ = tf.nn.tanh(h+bh)
+                r=tf.concat([rl,rr],0)
 
                 h = (1-z) * h_ + tf.reduce_sum(z*child_h,[0])
 
-                node_h = tf.concat(0,[node_h,h])
+                node_h = tf.concat([node_h,h],0)
 
                 idx_var=tf.add(idx_var,1)
 
@@ -207,11 +197,7 @@ class tf_NarytreeGRU(object):
 
             return node_h
 
-            # # 2nd Alteration
-            # cW = tf.get_variable("cW",[self.degree*self.hidden_dim,(self.degree+3)*self.hidden_dim])
-            # cb = tf.get_variable("cb",[3*self.hidden_dim])
-            # bh,bz,br=tf.split(0,3,cb)
-
+            #2nd Alteration
             # def _recurrence(node_h,idx_var):
             #     node_info=tf.gather(treestr,idx_var)
 
@@ -226,10 +212,9 @@ class tf_NarytreeGRU(object):
             #     zr = tf.nn.sigmoid(zr+bz)
             #     rl = tf.nn.sigmoid(rl+br)
             #     rr = tf.nn.sigmoid(rr+br)
+            #     h_ = tf.nn.tanh(h+bh)
             #     r=tf.concat(0,[rl,rr])
-            #     h_ = tf.reduce_sum(r*child_h,[0])     
-            #	  h_ = tf.nn.tanh(h+bh+h_)
-            #     z=tf.concat(0,[zl,zr])
+            #     z=tf.concat(0,[zl,z])
 
             #     h = (1-z) * h_ + tf.reduce_sum(z*child_h,[0])
 
@@ -244,7 +229,7 @@ class tf_NarytreeGRU(object):
             # node_h,idx_var=tf.while_loop(loop_cond, _recurrence,
             #                                     loop_vars,parallel_iterations=10)
 
-            # return node_h
+            return node_h
 
 
 
@@ -264,7 +249,7 @@ class tf_NarytreeGRU(object):
     def calc_loss(self,logits,labels):
 
         l1=tf.nn.sparse_softmax_cross_entropy_with_logits(
-            logits,labels)
+            logits=logits,labels=labels)
         loss=tf.reduce_sum(l1,[0])
         return loss
 
