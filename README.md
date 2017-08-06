@@ -20,7 +20,7 @@ I am testing two different alterations  of this idea.
 
 ## Requirements
 Python = 2.7 <br />
-Tensorflow =  r0.12 <br />
+Tensorflow =  r1.2.1 <br />
 
 In order to run those two models, you should run the following script, which downloads the pre-trained word embeddings.
 ```
