@@ -11,11 +11,11 @@ I am testing two different alterations  of this idea.
 
 ## 1rst alteration 
 
-![alt tag](https://github.com/VasTsak/master_thesis/blob/master/rersive_gru/first_approach.png?raw=true)
+![alt tag](https://github.com/VasTsak/master_thesis/blob/master/formulas/first_approach.png?raw=true)
 
 ## 2nd alteration 
 
-![alt tag](https://github.com/VasTsak/master_thesis/blob/master/rersive_gru/second_approach.png?raw=true)
+![alt tag](https://github.com/VasTsak/master_thesis/blob/master/formulas/second_approach.png?raw=true)
 
 
 ## Requirements
