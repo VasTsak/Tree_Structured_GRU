@@ -1,6 +1,6 @@
 The files 'lib' and 'scripts' are the dependencies, while the python 'recursive_gru' contains the scripts for the model and the report.
 
-# Tree-based Gated Recurrent Units
+# Tree-Structured Gated Recurrent Units
 
 This repository aims to be my repository that I will store the scripts for my master thesis.
 
